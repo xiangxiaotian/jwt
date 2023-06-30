@@ -1,11 +1,6 @@
-FROM eclipse-temurin:8-jdk-jammy
+FROM eclipse-temurin:8-jdk-jammy as base
+EXPOSE 8080
+WORKDIR /root
 
-WORKDIR /app
-
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:resolve
-
-COPY src ./src
-
-CMD ["./mvnw", "spring-boot:run"]
+ADD java-project/token*.jar /root/app.jar
+ENTRYPOINT ["java", "-jar", "/root/app.jar"]
